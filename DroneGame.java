@@ -16,25 +16,24 @@ public class DroneGame extends JPanel implements ActionListener, KeyListener
     public static ArrayList<JLabel> airplaneLabels=new ArrayList<>();
     private Timer timer;
     private final int delay = 10;      // Timer goes off every 100 milliseconds/.1seconds
-    private Score playerScore = new Score();
-    private Stopwatch scoreTimer = new Stopwatch();
+    Score playerScore = new Score();
+    Stopwatch scoreTimer = new Stopwatch();
     private int pausedTime = 0;
     private boolean isPaused = false;
     private int count = 0;
-    private JTextArea timerText;
-    private JTextArea scoreText;
-    private JPanel p;
+    ImageIcon icon = new ImageIcon("cloud_background_med.jpg");
+    final JLabel background = new JLabel(icon);
     
 
 
     public DroneGame()
     {
+    	
         addKeyListener(this);
         timer = new Timer(delay, this);
         drone = new Drone();
         playerScore = new Score();
         setSize(800,600);
-        p = new JPanel();
         setFocusable(true);
     }
 
@@ -55,8 +54,7 @@ public class DroneGame extends JPanel implements ActionListener, KeyListener
         
         Rectangle bounds = new Rectangle(400,300,140,50);           // Shift bounds to detect collisions and move airplane
 
-        //ImageIcon icon = new ImageIcon("cloud_background_med.jpg");
-        //final JLabel background = new JLabel(icon);
+        
         //make sure the image is in the same (src) project folder
         airplanes = new ArrayList<>();
         airplanes.add(airplane);
@@ -90,13 +88,7 @@ public class DroneGame extends JPanel implements ActionListener, KeyListener
         airplaneLabel4.setBounds(bounds);
         airplaneLabel5.setBounds(bounds);
 
-        timerText = new JTextArea(1, 5);
-        scoreText = new JTextArea(2, 10);
-     
-        timerText.setEnabled(false);
-        timerText.setOpaque(false);
-        scoreText.setEnabled(false);
-        scoreText.setOpaque(false);
+        
 
         JButton start = new JButton("Start");
         JButton pause = new JButton("Pause");
@@ -134,12 +126,10 @@ public class DroneGame extends JPanel implements ActionListener, KeyListener
         
         add(start);
         add(pause);
-        add(timerText);
-        add(scoreText);
+  
 
-        p.add(timerText, BorderLayout.PAGE_START);
-        p.add(scoreText, BorderLayout.PAGE_START);
-        add(p, BorderLayout.SOUTH);
+        
+        
         add(start, BorderLayout.PAGE_START);
         add(pause,BorderLayout.PAGE_START);
         //add(background);
@@ -213,10 +203,7 @@ public class DroneGame extends JPanel implements ActionListener, KeyListener
             System.out.println(playerScore.printScore());
             count = 0;
         }
-        timerText.setText("");
-        scoreText.setText("");
-        //timerText.append(scoreTimer.printTime());
-        //scoreText.append(playerScore.printScore());
+        
     }
 
 
@@ -230,8 +217,9 @@ public class DroneGame extends JPanel implements ActionListener, KeyListener
     public void draw(Graphics g)
     {
         Graphics2D g2 = (Graphics2D)g;
-
+        g2.drawImage(icon.getImage(), 0, 0, this);
         g2.drawImage(drone.getImage(), drone.getX(), drone.getY(), this);
+      
     }
 
     public void keyPressed(KeyEvent e){
