@@ -20,8 +20,11 @@ public class DroneGame extends JPanel implements ActionListener, KeyListener
     private Stopwatch scoreTimer = new Stopwatch();
     private int pausedTime = 0;
     private boolean isPaused = false;
+    private int count = 0;
     private JTextArea timerText;
     private JTextArea scoreText;
+    private JPanel p;
+    
 
 
     public DroneGame()
@@ -31,6 +34,7 @@ public class DroneGame extends JPanel implements ActionListener, KeyListener
         drone = new Drone();
         playerScore = new Score();
         setSize(800,600);
+        p = new JPanel();
         setFocusable(true);
     }
 
@@ -121,22 +125,23 @@ public class DroneGame extends JPanel implements ActionListener, KeyListener
             }
         });
 
-        add(airplaneLabel, BorderLayout.CENTER);
-        add(airplaneLabel1, BorderLayout.CENTER); 
-        add(airplaneLabel2, BorderLayout.CENTER);
-        add(airplaneLabel3, BorderLayout.CENTER);
-        add(airplaneLabel4, BorderLayout.CENTER);
-        add(airplaneLabel5, BorderLayout.CENTER);
+        add(airplaneLabel);
+        add(airplaneLabel1); 
+        add(airplaneLabel2);
+        add(airplaneLabel3);
+        add(airplaneLabel4);
+        add(airplaneLabel5);
         
         add(start);
         add(pause);
         add(timerText);
         add(scoreText);
 
+        p.add(timerText, BorderLayout.PAGE_START);
+        p.add(scoreText, BorderLayout.PAGE_START);
+        add(p, BorderLayout.SOUTH);
         add(start, BorderLayout.PAGE_START);
         add(pause,BorderLayout.PAGE_START);
-        add(timerText, BorderLayout.PAGE_START);
-        add(scoreText, BorderLayout.PAGE_START);
         //add(background);
 
         setVisible(true);
@@ -201,10 +206,17 @@ public class DroneGame extends JPanel implements ActionListener, KeyListener
                 playerScore.nextGame(false);
             }
         }
+        count ++;
+        if(count > 100)
+        {
+            System.out.println(scoreTimer.printTime());
+            System.out.println(playerScore.printScore());
+            count = 0;
+        }
         timerText.setText("");
         scoreText.setText("");
-        timerText.append(scoreTimer.printTime());
-        scoreText.append(playerScore.printScore());
+        //timerText.append(scoreTimer.printTime());
+        //scoreText.append(playerScore.printScore());
     }
 
 
