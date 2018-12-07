@@ -29,8 +29,8 @@ public class Drone
 		if(x > 800-70)
 			x = 800-70;
 		y += dy;
-		if(y > 600-120)
-			y=600-120;
+		if(y > 550-70)
+			y=550-70;
 		if(x<0)
 			x=0;
 		if(y<0)

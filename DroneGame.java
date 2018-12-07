@@ -11,24 +11,23 @@ import javax.swing.Timer;
 public class DroneGame extends JPanel implements ActionListener, KeyListener
 {
     Drone drone = new Drone();
-    public static ArrayList<Airplane> airplanes=new ArrayList<>();
-    private Boolean paused = true;
-    public static ArrayList<JLabel> airplaneLabels=new ArrayList<>();
-    private Timer timer;
-    private final int delay = 10;      // Timer goes off every 100 milliseconds/.1seconds
     Score playerScore = new Score();
     Stopwatch scoreTimer = new Stopwatch();
+    ImageIcon icon = new ImageIcon("cloud_background_med.jpg");
+    private Timer timer;
+    private Boolean paused = false;
     private int pausedTime = 0;
     private boolean isPaused = false;
-    private int count = 0;
-    ImageIcon icon = new ImageIcon("cloud_background_med.jpg");
+    public static ArrayList<JLabel> airplaneLabels=new ArrayList<>();
+    public static ArrayList<Airplane> airplanes=new ArrayList<>();
     final JLabel background = new JLabel(icon);
+    private final int delay = 10;      // Timer
     
 
 
     public DroneGame()
     {
-    	
+        
         addKeyListener(this);
         timer = new Timer(delay, this);
         drone = new Drone();
@@ -91,7 +90,6 @@ public class DroneGame extends JPanel implements ActionListener, KeyListener
         
 
         JButton start = new JButton("Start");
-        JButton pause = new JButton("Pause");
 
 
         start.addActionListener(new ActionListener() {
@@ -107,15 +105,6 @@ public class DroneGame extends JPanel implements ActionListener, KeyListener
             }
         });
 
-        pause.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae)
-            {
-                paused = true;
-                timer.stop();
-                pausedTime = scoreTimer.getSeconds();
-                isPaused = true;
-            }
-        });
 
         add(airplaneLabel);
         add(airplaneLabel1); 
@@ -125,15 +114,7 @@ public class DroneGame extends JPanel implements ActionListener, KeyListener
         add(airplaneLabel5);
         
         add(start);
-        add(pause);
-  
-
         
-        
-        add(start, BorderLayout.PAGE_START);
-        add(pause,BorderLayout.PAGE_START);
-        //add(background);
-
         setVisible(true);
     }
 
@@ -153,6 +134,7 @@ public class DroneGame extends JPanel implements ActionListener, KeyListener
 
     public void lose()
     {
+        paused = true;
         JFrame frame = new JFrame();
         JOptionPane.showMessageDialog(frame, "Game Over.");
         scoreTimer.resetTime();
@@ -196,14 +178,6 @@ public class DroneGame extends JPanel implements ActionListener, KeyListener
                 playerScore.nextGame(false);
             }
         }
-        count ++;
-        if(count > 100)
-        {
-            System.out.println(scoreTimer.printTime());
-            System.out.println(playerScore.printScore());
-            count = 0;
-        }
-        
     }
 
 
@@ -221,7 +195,14 @@ public class DroneGame extends JPanel implements ActionListener, KeyListener
         g2.drawImage(drone.getImage(), drone.getX(), drone.getY(), this);
       
     }
-
+    
+    
+    public boolean isPaused()
+    {
+        return paused;
+    }
+    
+    
     public void keyPressed(KeyEvent e){
         drone.keyPressed(e);
     }

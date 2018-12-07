@@ -13,42 +13,57 @@ public class Score
 		lives = 3;
 	}
 	
-	public String printScore() {
+	public String printScore() 
+	{
 		return "Score: " + score + " out of " + totalGames + "\n"+ "Lives remaining: " + lives;
 	}
-	public void changeScore(boolean gameWon) {
-		if (gameWon) {
-			if (score == 0 && totalGames == 1) {
+	
+	
+	public void changeScore(boolean gameWon) 
+	{
+		if (gameWon) 
+		{
+			if (score == 0 && totalGames == 1) 
+			{
 				score++;
-			} else {
+			} 
+			else 
+			{
 				score++;
 				totalGames++;
 			}
-		} else {
+		} 
+		else 
+		{
 			totalGames++;
 		}
 	}
-	public void nextGame(boolean gameWon) {
+	public void nextGame(boolean gameWon) 
+	{
 		lives = 3;
 		changeScore(gameWon);
 	}
-	public void resetScore(boolean gameReset) {
-		if (gameReset) {
+	public void resetScore(boolean gameReset) 
+	{
+		if (gameReset) 
+		{
 			score = 0;
 			totalGames = 1;
 		}
 	}
-	public void decreaseLives() {
+	public void decreaseLives() 
+	{
 		lives--;
 	}
 	
-		public int getLives() {
+	public int getLives() 
+	{
 		return lives;
 	}
 		
-		public void resetLives()
-		{
-			lives = 3;
-		}
+	public void resetLives()
+	{
+		lives = 3;
+	}
 
 }

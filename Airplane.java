@@ -36,7 +36,7 @@ public class Airplane implements Icon
 	}
 	public void resetY()
 	{
-		y = (int)(Math.random()*600+1);
+		y = (int)(Math.random()* 525 + 1);
 	}
 	
 	@Override

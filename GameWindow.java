@@ -15,22 +15,18 @@ public class GameWindow extends JFrame implements ActionListener
   private JTextArea scoreText;
   private Timer timer;
   private DroneGame game;
+  private boolean paused;
 
-  private JLabel gameinfo;
-
-  public GameWindow() {
+  public GameWindow() 
+  {
     initializeUI();
-    timer = new Timer(100, this);
+    timer = new Timer(1000, this);
     timer.start();
 
   }
 
   private void initializeUI() 
   {
-
-    gameinfo = new JLabel();
-    add(gameinfo, BorderLayout.SOUTH);
-
     game = new DroneGame();
     game.setFocusable(true);
     add(game);
@@ -56,24 +52,20 @@ public class GameWindow extends JFrame implements ActionListener
     setDefaultCloseOperation(EXIT_ON_CLOSE);
   }
 
-  public JLabel getGameInfo() 
-  {
-    return gameinfo;
+  @Override
+  public void actionPerformed(ActionEvent e) {
+    game.actionPerformed(e);
+    timerText.setText("");
+    scoreText.setText("");
+    timerText.append(game.scoreTimer.printTime());
+    scoreText.append(game.playerScore.printScore());
   }
-
+  
   public static void main(String[] args) {
 
     GameWindow game = new GameWindow();
 
     game.setVisible(true);
-  }
-
-  @Override
-  public void actionPerformed(ActionEvent e) {
-    timerText.setText("");
-    scoreText.setText("");
-    timerText.append(game.scoreTimer.printTime());
-    scoreText.append(game.playerScore.printScore());
   }
 }
 
